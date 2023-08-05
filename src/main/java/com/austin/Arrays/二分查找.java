@@ -37,6 +37,11 @@ public class 二分查找 {
         return -1;
     }
 
+    /**
+     * 时间复杂度：O(log n)
+     * 空间复杂度：O(1)
+     */
+
     public static void main(String[] args) {
         int[] nums = {1, 2, 3, 4, 5};
         int search = search(nums, 3);
