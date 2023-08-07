@@ -22,27 +22,35 @@ package com.austin.String;
  */
 public class 反转字符串II {
 
-    public static char[] reverse(char[] s, Integer k) {
+    public static String reverseStr(String s, Integer k) {
 
-        StringBuffer stringBuffer = new StringBuffer();
-        int length = s.length;
-        int start = 0;
-
-        while (start < length){
-            //找到k处和2k处
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < chars.length; i += 2 * k) {
+            if (i + k <= chars.length) {
+                reverse(chars, i, i + k - 1);
+                //跳过下面的
+                continue;
+            }
+            // 3. 剩余字符少于 k 个，则将剩余字符全部反转
+            reverse(chars, i, chars.length - 1);
         }
-
-        //todo 继续补充下部分
-        return null;
+        return new String(chars);
     }
 
+    // 定义翻转函数
+    public static void reverse(char[] ch, int i, int j) {
+        for (; i < j; i++, j--) {
+            char temp = ch[i];
+            ch[i] = ch[j];
+            ch[j] = temp;
+        }
+    }
 
 
     public static void main(String[] args) {
         String str = "bacdfeg";
-        char[] s = str.toCharArray();
-        char[] reverse = reverse(s, 2);
-        System.out.println(reverse);
+        String s = reverseStr(str, 2);
+        System.out.println(s);
     }
 
 }
