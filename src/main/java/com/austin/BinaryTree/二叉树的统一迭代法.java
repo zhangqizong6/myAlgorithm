@@ -37,6 +37,4 @@ public class 二叉树的统一迭代法 {
         }
         return result;
     }
-
-
 }
