@@ -128,8 +128,39 @@ class Tree:
         node.index = self.count
         self.count+=1
 
-        if self.count>self.max_count:
+        if self.count>=self.max_count:
             raise Tree.FullException
+    @classmethod
+    def create_in_order(cls,max_count):
+        tree=Tree(max_count)
+        def _f(nodes:List[TreeNode],layer=0):
+            layer_nodes=[]
+            for node in nodes:
+                left = TreeNode(TreeNode.Type.Left)
+                node.left = left
+                left.parent = node
+                layer_nodes.append(left)
+                tree.add_child(left)
+                left.layer = layer
+
+                right = TreeNode(TreeNode.Type.Right)
+                node.right = right
+                layer_nodes.append(right)
+                right.parent = node
+                tree.add_child(right)
+                right.layer = layer
+            tree.max_layer += 1
+            _f(layer_nodes, layer + 1)
+
+        instance=TreeNode(TreeNode.Type.Root)
+        try:
+            tree.add_child(instance)
+            tree.max_layer += 1
+            tree.root = instance
+            _f([instance])
+        except Tree.FullException:
+            return tree
+
 
 
     @classmethod

@@ -7,14 +7,21 @@ from PySide2 import QtGui
 from PySide2 import QtCore
 from cc.dcc.usd.Stage import UsdStage
 from cc.dcc.usd.System import open_usdview
+from cc.pyside2.Common import processSleep
+from cc.pyside2.widgets.uipy_main.Message import Message
 from cc.std.os import OS
 from cc.std.sys import Sys
+
+from data_structure import Tree
 from pxr.Usdviewq import AppController
 
 import globs
 import factory
 from enums import AlgorithmType
 from main_ui import Ui_MainWindow
+import cc.icons_rc
+
+import util
 
 
 class MainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
@@ -23,16 +30,26 @@ class MainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.setupUi(self)
         self.init_usdview()
         self.init_ui()
+        self.init_attrs()
         self.init_conn()
+
     def init_conn(self):
-        self.pushButton.clicked.connect(self.create_random_tree)
+        self.pushButton.clicked.connect(lambda :importlib.reload(util) and self.util.create_random_tree())
+        self.pushButton_2.clicked.connect(lambda :importlib.reload(util) and self.util.create_in_order_tree())
+        self.pushButton_3.clicked.connect(lambda :importlib.reload(util) and self.util.generate_anim())
+        self.pushButton_4.clicked.connect(lambda :importlib.reload(util) and  self.util.save_mp4())
 
     def init_ui(self):
+        self.setWindowTitle("算法可视化~prprpr 0.01")
+        self.setWindowIcon(QtGui.QIcon(":/assets/resource/ppr.png"))
         self.comboBox.addItems(AlgorithmType.get_map().values())
 
         self.update_algorithm_names()
         self.update_usd_files()
 
+    def init_attrs(self):
+        self.tree_fac:factory.UsdTreeFactory=None
+        self.util=util.Util(self,self.usdview_controller)
 
     def init_usdview(self):
         empty_usda_path=OS.join(globs.usd_files_dir, "empty.usda")
@@ -46,19 +63,14 @@ class MainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         # self.usdview_controller._ui.topBottomSplitter.setSizes([0])
         self.usdview_controller.setViewerMode(True)
         self.verticalLayout.addWidget(self.usdview_controller._mainWindow)
+
     def update_usd_files(self):
         self.comboBox_3.addItems(OS.listdir(globs.examples_dir))
+
     def update_algorithm_names(self):
         self.comboBox_2.addItems(AlgorithmType.get_details()[self.comboBox.currentIndex()])
 
-    def create_random_tree(self):
-        if not Sys.isFrozen():
-            importlib.reload(factory)
-        self.tree_fac=factory.UsdTreeFactory(OS.join(globs.examples_dir,self.comboBox_3.currentText()))
-        tree_stage_path=self.tree_fac.create_random_tree(int(self.lineEdit.text() or 10))
-        self.usdview_controller._parserData.usdFile = str(tree_stage_path)
-        self.usdview_controller._mainWindow.setWindowTitle(tree_stage_path)
-        self.usdview_controller._reopenStage()
+
 
     def closeEvent(self, event:PySide2.QtGui.QCloseEvent) -> None:
         self.usdview_controller._mainWindow.closeEvent(event)

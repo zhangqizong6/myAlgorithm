@@ -1,7 +1,7 @@
 import time,env
 from typing import List
 
-from cc.dcc.usd.Attribute import UsdAttribute
+from cc.dcc.usd.Attribute import UsdAttribute, pl_SdfValueTypeNames
 from cc.dcc.usd.Prim import copyPrim2Prim
 from cc.dcc.usd.UsdCmdsHint import UsdPrimHint
 from cc.dcc.usd.common import joinPrimPaths
@@ -10,6 +10,7 @@ from cc.std.os import OS
 
 import globs
 from data_structure import TreeNode, Tree
+from pxr import Gf
 
 
 class UsdTreeFactory:
@@ -53,16 +54,18 @@ class UsdTreeFactory:
         self.width = abs(self.extent[1][0] - self.extent[0][0])
 
 
-    def create_random_tree(self,max_count,output_path=None):
-        usd_tree_stage_path=output_path or OS.join(globs.temp_dir,f"{self.usd_name}_tree.{self.usd_type}")
-        usd_tree_stage=UsdStage.new(usd_tree_stage_path)
-        root_path = joinPrimPaths("tree")
-        tree_prim=usd_tree_stage.DefinePrim(root_path)
-        usd_tree_stage.SetDefaultPrim(tree_prim)
-        first_prim=usd_tree_stage.DefinePrim(joinPrimPaths(root_path, self.usd_name))
-        self._duplicated_default(first_prim)
-        tree=Tree.random(max_count)
+    def create_tree(self, tree:Tree, output_path=None):
         print(tree.to_json())
+        usd_tree_stage_path=output_path or OS.join(globs.temp_dir,f"{self.usd_name}_tree.{self.usd_type}")
+        print(usd_tree_stage_path)
+        self.usd_tree_stage=UsdStage.new(usd_tree_stage_path)
+        self.usd_tree_stage.Reload()
+        root_path = joinPrimPaths("tree")
+        tree_prim=self.usd_tree_stage.DefinePrim(root_path)
+        self.usd_tree_stage.SetDefaultPrim(tree_prim)
+        first_prim=self.usd_tree_stage.DefinePrim(joinPrimPaths(root_path, self.usd_name))
+        self._duplicated_default(first_prim)
+
         # tree=Tree.from_json({'Right': {'Left': {}, 'Right': {}}})
 
         # for i in range(max_count):
@@ -94,7 +97,7 @@ class UsdTreeFactory:
                 if node.left:
                     left_index=str(node.left.index)
                     left_child_t = [parent_t[0] - left_interval, parent_t[1]-1, parent_t[2]]
-                    left_object = self._duplicated_default(usd_tree_stage.DefinePrim(OS.join(root_path, f"{self.usd_name}_{left_index}")))
+                    left_object = self._duplicated_default(self.usd_tree_stage.DefinePrim(OS.join(root_path, f"{self.usd_name}_{left_index}")))
                     UsdAttribute.set_translate(left_object,left_child_t)
                     UsdAttribute.xformOpOrder(left_object,[UsdAttribute.XformOp.translate])
                     next_objects.append(left_object)
@@ -102,7 +105,7 @@ class UsdTreeFactory:
                 if node.right:
                     right_index=str(node.right.index)
                     right_child_t = [parent_t[0] + right_interval, parent_t[1] -1, parent_t[2]]
-                    right_object = self._duplicated_default(usd_tree_stage.DefinePrim(OS.join(root_path, f"{self.usd_name}_{right_index}")))
+                    right_object = self._duplicated_default(self.usd_tree_stage.DefinePrim(OS.join(root_path, f"{self.usd_name}_{right_index}")))
                     UsdAttribute.set_translate(right_object,right_child_t)
                     UsdAttribute.xformOpOrder(right_object,[UsdAttribute.XformOp.translate])
                     next_objects.append(right_object)
@@ -112,14 +115,32 @@ class UsdTreeFactory:
 
         _f([first_prim], [tree.root])
 
-        usd_tree_stage.SetMetadata("upAxis","Y")
-        usd_tree_stage.Save()
+        self.usd_tree_stage.SetMetadata("upAxis","Y")
+        self.usd_tree_stage.Save()
 
         return usd_tree_stage_path
+
+
     def _duplicated_default(self, prim):
         copyPrim2Prim(self.default_prim,prim)
         return prim
 
+    def generate_pre_order_anim(self):
+        current_frame=0
+        anim_interval=4
+        scale_scale=1/anim_interval
+        self.usd_tree_stage.SetStartTimeCode(0)
+        for ever in self.usd_tree_stage.GetDefaultPrim().GetChildren():
+            scale_attr=ever.CreateAttribute(UsdAttribute.XformOp.scale, pl_SdfValueTypeNames.Float3,custom=False)
+            scale_attr.Set(Gf.Vec3f([0,0,0]))
+            for f in range(anim_interval+1):
+                s=scale_scale * (f)
+                scale_attr.Set(Gf.Vec3f([s,s,s]),current_frame+f)
+            current_frame+=anim_interval
+            UsdAttribute.xformOpOrder(ever,[UsdAttribute.XformOp.translate,UsdAttribute.XformOp.scale])
+        self.usd_tree_stage.SetEndTimeCode(current_frame)
+        self.usd_tree_stage.SetFramesPerSecond(24)
+        self.usd_tree_stage.Save()
 
 
 
@@ -127,5 +148,5 @@ class UsdTreeFactory:
 
 if __name__ == '__main__':
     fac=UsdTreeFactory(OS.join(globs.examples_dir,"pig.usd"))
-    fac.create_random_tree(1)
+    fac.create_tree(1)
 

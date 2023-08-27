@@ -426,9 +426,9 @@ class AppController(QtCore.QObject):
 
             # Waiting to show the mainWindow till after setting the
             # statusBar saves considerable GUI configuration time.
-            self._mainWindow.show()
-            self._mainWindow.setFocus()
-            self._mainWindow.activateWindow()
+            # self._mainWindow.show()
+            # self._mainWindow.setFocus()
+            # self._mainWindow.activateWindow()
             
             # Install our custom event filter.  The member assignment of the
             # filter is just for lifetime management
@@ -3774,10 +3774,10 @@ class AppController(QtCore.QObject):
                 self._stageView.updateSelection()
                 self._stageView.updateView()
 
-    def saveFrame(self, fileName):
+    def saveFrame(self, fileName,saveType="TIFF"):
         if self._stageView:
             pm =  QtGui.QPixmap.grabWindow(self._stageView.winId())
-            pm.save(fileName, 'TIFF')
+            pm.save(fileName, saveType)
 
     def _getPropertiesDict(self):
         propertiesDict = OrderedDict()

@@ -380,7 +380,9 @@ class Launcher(object):
             AppController.clearSettings()
 
         # Create the Qt application
-        app = QtWidgets.QApplication(sys.argv)
+        app = QtWidgets.QApplication.instance()
+        if not app:
+            app = QtWidgets.QApplication(sys.argv)
 
         contextCreator = lambda usdFile: self.GetResolverContext(usdFile)
         appController = AppController(arg_parse_result, contextCreator)
