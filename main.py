@@ -44,8 +44,15 @@ class MainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.setWindowIcon(QtGui.QIcon(":/assets/resource/ppr.png"))
         self.comboBox.addItems(AlgorithmType.get_map().values())
 
-        self.update_algorithm_names()
+        # self.update_algorithm_names()
         self.update_usd_files()
+        self.update_anim_comboBox()
+        self.update_video_comboBox()
+    def update_video_comboBox(self):
+        self.comboBox_2.addItems(["gif","mp4"])
+
+    def update_anim_comboBox(self):
+        self.comboBox_4.addItem("前序遍历")
 
     def init_attrs(self):
         self.tree_fac:factory.UsdTreeFactory=None
@@ -67,8 +74,6 @@ class MainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def update_usd_files(self):
         self.comboBox_3.addItems(OS.listdir(globs.examples_dir))
 
-    def update_algorithm_names(self):
-        self.comboBox_2.addItems(AlgorithmType.get_details()[self.comboBox.currentIndex()])
 
 
 

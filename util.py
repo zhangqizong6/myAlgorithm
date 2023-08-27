@@ -78,7 +78,7 @@ class Util:
             self.usdview_controller._setFrameIndex(f)
             self.usdview_controller.saveFrame(OS.join(cache_dir,f"{f}.{image_type}"),image_type)
         print(cache_dir)
-        output_path=OS.join(globs.output_dir,'output.mp4')
+        output_path=OS.join(globs.output_dir,f'output.{self.ui.comboBox_2.currentText()}')
         fps=24
         cmd = rf"cd /d {cache_dir} && {globs.ffmpeg_path} -r {fps} -f  image2 -i %d.{image_type} {output_path} -y"
         print(cmd)

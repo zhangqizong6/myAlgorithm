@@ -35,16 +35,6 @@ class Ui_MainWindow(object):
         self.widget_3.setObjectName(u"widget_3")
         self.gridLayout = QGridLayout(self.widget_3)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.label_2 = QLabel(self.widget_3)
-        self.label_2.setObjectName(u"label_2")
-
-        self.gridLayout.addWidget(self.label_2, 2, 0, 1, 1)
-
-        self.comboBox_2 = QComboBox(self.widget_3)
-        self.comboBox_2.setObjectName(u"comboBox_2")
-
-        self.gridLayout.addWidget(self.comboBox_2, 2, 1, 1, 1)
-
         self.comboBox = QComboBox(self.widget_3)
         self.comboBox.setObjectName(u"comboBox")
 
@@ -69,15 +59,10 @@ class Ui_MainWindow(object):
         self.page_2.setObjectName(u"page_2")
         self.gridLayout_2 = QGridLayout(self.page_2)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.pushButton = QPushButton(self.page_2)
-        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton_2 = QPushButton(self.page_2)
+        self.pushButton_2.setObjectName(u"pushButton_2")
 
-        self.gridLayout_2.addWidget(self.pushButton, 2, 0, 1, 3)
-
-        self.comboBox_3 = QComboBox(self.page_2)
-        self.comboBox_3.setObjectName(u"comboBox_3")
-
-        self.gridLayout_2.addWidget(self.comboBox_3, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_2, 1, 0, 1, 3)
 
         self.lineEdit = QLineEdit(self.page_2)
         self.lineEdit.setObjectName(u"lineEdit")
@@ -88,6 +73,16 @@ class Ui_MainWindow(object):
         self.lineEdit.setSizePolicy(sizePolicy1)
 
         self.gridLayout_2.addWidget(self.lineEdit, 0, 1, 1, 2)
+
+        self.pushButton = QPushButton(self.page_2)
+        self.pushButton.setObjectName(u"pushButton")
+
+        self.gridLayout_2.addWidget(self.pushButton, 2, 0, 1, 3)
+
+        self.comboBox_3 = QComboBox(self.page_2)
+        self.comboBox_3.setObjectName(u"comboBox_3")
+
+        self.gridLayout_2.addWidget(self.comboBox_3, 0, 0, 1, 1)
 
         self.groupBox = QGroupBox(self.page_2)
         self.groupBox.setObjectName(u"groupBox")
@@ -107,18 +102,18 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addItem(self.verticalSpacer, 2, 1, 1, 1)
 
-        self.pushButton_4 = QPushButton(self.groupBox)
-        self.pushButton_4.setObjectName(u"pushButton_4")
-
-        self.gridLayout_3.addWidget(self.pushButton_4, 3, 0, 1, 2)
-
 
         self.gridLayout_2.addWidget(self.groupBox, 3, 0, 1, 3)
 
-        self.pushButton_2 = QPushButton(self.page_2)
-        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.comboBox_2 = QComboBox(self.page_2)
+        self.comboBox_2.setObjectName(u"comboBox_2")
 
-        self.gridLayout_2.addWidget(self.pushButton_2, 1, 0, 1, 3)
+        self.gridLayout_2.addWidget(self.comboBox_2, 4, 0, 1, 1)
+
+        self.pushButton_4 = QPushButton(self.page_2)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+
+        self.gridLayout_2.addWidget(self.pushButton_4, 4, 1, 1, 2)
 
         self.stackedWidget.addWidget(self.page_2)
 
@@ -153,13 +148,12 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u7ec6\u5206\u7c7b\u578b", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u7b97\u6cd5\u7c7b\u578b", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u751f\u6210\u968f\u673a\u6811", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u987a\u5e8f\u751f\u6210", None))
         self.lineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u6700\u5927\u4e2a\u6570,\u9ed8\u8ba410", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u751f\u6210\u968f\u673a\u6811", None))
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"\u52a8\u753b", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u751f\u6210\u52a8\u753b", None))
-        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58\u4e3aMP4", None))
-        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u987a\u5e8f\u751f\u6210", None))
+        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"\u8f93\u51fa\u89c6\u9891", None))
     # retranslateUi
 

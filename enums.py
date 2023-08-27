@@ -8,5 +8,5 @@ class AlgorithmType:
     @staticmethod
     def get_details():
         return {
-            AlgorithmType.BinaryTree:["前序遍历"]
+            AlgorithmType.BinaryTree:[""]
         }

@@ -27,16 +27,6 @@
        <item>
         <widget class="QWidget" name="widget_3" native="true">
          <layout class="QGridLayout" name="gridLayout">
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>细分类型</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="comboBox_2"/>
-          </item>
           <item row="1" column="1">
            <widget class="QComboBox" name="comboBox"/>
           </item>
@@ -64,15 +54,12 @@
          <widget class="QWidget" name="page"/>
          <widget class="QWidget" name="page_2">
           <layout class="QGridLayout" name="gridLayout_2">
-           <item row="2" column="0" colspan="3">
-            <widget class="QPushButton" name="pushButton">
+           <item row="1" column="0" colspan="3">
+            <widget class="QPushButton" name="pushButton_2">
              <property name="text">
-              <string>生成随机树</string>
+              <string>顺序生成</string>
              </property>
             </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QComboBox" name="comboBox_3"/>
            </item>
            <item row="0" column="1" colspan="2">
             <widget class="QLineEdit" name="lineEdit">
@@ -86,6 +73,16 @@
               <string>最大个数,默认10</string>
              </property>
             </widget>
+           </item>
+           <item row="2" column="0" colspan="3">
+            <widget class="QPushButton" name="pushButton">
+             <property name="text">
+              <string>生成随机树</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QComboBox" name="comboBox_3"/>
            </item>
            <item row="3" column="0" colspan="3">
             <widget class="QGroupBox" name="groupBox">
@@ -116,20 +113,16 @@
                 </property>
                </spacer>
               </item>
-              <item row="3" column="0" colspan="2">
-               <widget class="QPushButton" name="pushButton_4">
-                <property name="text">
-                 <string>保存为MP4</string>
-                </property>
-               </widget>
-              </item>
              </layout>
             </widget>
            </item>
-           <item row="1" column="0" colspan="3">
-            <widget class="QPushButton" name="pushButton_2">
+           <item row="4" column="0">
+            <widget class="QComboBox" name="comboBox_2"/>
+           </item>
+           <item row="4" column="1" colspan="2">
+            <widget class="QPushButton" name="pushButton_4">
              <property name="text">
-              <string>顺序生成</string>
+              <string>输出视频</string>
              </property>
             </widget>
            </item>
