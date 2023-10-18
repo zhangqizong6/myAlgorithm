@@ -6,6 +6,9 @@ package com.austin.training.day3;
  * @date: 2023/10/13 22:50
  */
 
+/**
+ * 移除链表的某个元素
+ */
 public class removeElements {
 
 

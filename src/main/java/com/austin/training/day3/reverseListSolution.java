@@ -6,6 +6,9 @@ package com.austin.training.day3;
  * @date: 2023/10/13 23:24
  */
 
+/**
+ * 反转链表
+ */
 public class reverseListSolution {
 
     public ListNode reverserList(ListNode head) {
