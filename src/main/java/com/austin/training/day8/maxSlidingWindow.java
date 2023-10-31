@@ -38,11 +38,13 @@ public class maxSlidingWindow {
             ints[index] = tmp;
             index++;
         }
-
         return ints;
-
     }
 
+    public static int[] slidingWindowByQue(int[] nums, int k) {
+
+        return null;
+    }
     public static void main(String[] args) {
         int[] ints = {1, 3, -1, -3, 5, 3, 6, 7};
         int[] ints1 = slidingWindow(ints, 3);
